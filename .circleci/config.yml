@@ -22,7 +22,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn run test
-  check:format :
+  check_format :
     docker:
       - image: node:10.18.0
     working_directory: ~/repo
@@ -46,4 +46,4 @@ workflows:
   project_workflows:
     jobs:
       - test
-      - check:format
+      - check_format
