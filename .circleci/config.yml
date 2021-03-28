@@ -79,6 +79,7 @@ jobs:
       - run: yarn global add netlify-cli
       - run: yarn run build && yarn run netlify:deploy
 
+
 workflows:
   project_workflows:
     jobs:
