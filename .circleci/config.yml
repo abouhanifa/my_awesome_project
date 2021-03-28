@@ -68,5 +68,5 @@ workflows:
       - test
       - check_format
       - build:
-            requires:
-              - test
+          requires:
+            - test
