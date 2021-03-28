@@ -41,9 +41,32 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn format:write  && yarn format:check
+  build:
+    docker:
+      - image: node:10.18.0
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn run build
 
 workflows:
   project_workflows:
     jobs:
       - test
       - check_format
+      - build:
+            requires:
+              - test
