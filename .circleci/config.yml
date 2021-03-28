@@ -61,7 +61,23 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn run build
-
+  deploy_to_netlify:
+    docker:
+      - image: node:10.18.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn global add netlify-cli
+      - run: yarn run build && yarn run netlify:deploy
 workflows:
   project_workflows:
     jobs:
@@ -70,3 +86,9 @@ workflows:
       - build:
           requires:
             - test
+      - deploy_to_netlify:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main

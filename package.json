@@ -16,7 +16,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "format:write": "prettier --write \"**/*.{js,vue,json,ts,tsx,md,yml,html}\"",
-    "format:check": "prettier --list-different \"**/*.{js,vue,json,ts,tsx,md,yml,html}\""
+    "format:check": "prettier --list-different \"**/*.{js,vue,json,ts,tsx,md,yml,html}\"",
+    "netlify:deploy": "netlify deploy --dir=./build -p -m \"$(git log -1 --pretty=%B)\""
   },
   "eslintConfig": {
     "extends": [
